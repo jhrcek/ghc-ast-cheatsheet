@@ -6,7 +6,7 @@
 {-# LANGUAGE TypeAbstractions #-}
 {-# LANGUAGE NPlusKPatterns #-}
 module Language.Haskell.Syntax.Pat.Example where
-import Data.String
+
 wildPat _ {- WildPat -} = ()
 varPat x {- VarPat -} = x
 lazyPat ~x {- LazyPat -} = x
@@ -18,12 +18,14 @@ tuplePat (x, y) {- TuplePat -} = (x, y)
 -- Requires -XUnboxedSums
 sumPat (# x | #) {- SumPat -} = x
 conPat (ConPatDemo x y) {- ConPat -}= (x, y)
+-- Requires -XViewPatterns
 viewPat (id -> x) {- ViewPat -}= x
+-- Requires -XTemplateHaskell
 splicePat $( [p| x |] ) {- SplicePat -} = x
 litPat 'x' {- LitPat -} = 'x'
 nPat 42 {- NPat -} = ()
+-- Requires -XNPlusKPatterns
 nPlusKPat (k+1) {- NPlusKPat -} = k
-
 sigPat (x :: Int) {- SigPat -} = x
 
 invisPat :: forall a. a -> a
